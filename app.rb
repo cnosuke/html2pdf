@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'pdfkit'
+require 'uri'
 
 OPTS_PREFIX = 'WKHTMLTOPDF_OPTS_'
 WKHTMLTOPDF_OPTS = ENV.select{|k,_| k.start_with?(OPTS_PREFIX) }
@@ -24,7 +25,7 @@ def valid_url?(url)
 end
 
 def parse_reqest_url
-  request.env['REQUEST_URI'].split('/html2pdf/').last
+  URI.unescape(request.env['REQUEST_URI'].split('/html2pdf/').last)
 end
 
 put '/healthcheck' do
